@@ -2,7 +2,7 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable
+    :recoverable, :rememberable, :trackable, :validatable
 
   has_many :posts
   has_many :comments
@@ -17,4 +17,8 @@ class User < ApplicationRecord
     self.email.split("@").first
   end
 
+  def like_post?(post)
+    # self.likes.where(post_id: post.id).exists?
+    post.liked_users.include?(self)
+  end
 end
